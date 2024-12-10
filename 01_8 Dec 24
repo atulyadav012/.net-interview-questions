@@ -1,3 +1,124 @@
+Sources:
+https://www.youtube.com/watch?v=LvsiqAyFzPk
+by Redux Thunk | Complete Redux Thunk Tutorial in one video | In Depth must watch video! Techinfo Y
+
+
+#Redux Thunk or saga is used in enterprise instead of Redux is sync and
+Redux thunk provide delay functionlity
+thunk -  async err,res
+delay x=1+2 clg(x) var x = () => {1+2}
+
+axios 
+Redux
+redux-thunk
+react-redux
+redux-devtools-extension
+
+
+folder structrue
+
+1. Seprate Redux folder:
+	-Actions folder
+	-Constants folder
+	-reducers folder
+	-store.js in root directory
+
+2. In Root Project:
+	-Actions folder
+	-Constants folder
+	-reducers folder
+	-store.js in root directory
+
+3. In Component Level:
+	-Component folder 
+		-Actions folder
+		-Constants folder
+		-reducers folder
+		-store.js in root directory
+		
+store.js
+-----------------
+import {createStore, CombineReducers, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
+import {composeWithDevTools} from 'redux-devtools-extension'
+
+const rootReducer = combineReducers({
+userReducer,
+})
+
+const initialState ={}
+
+const middleware =[thunk]
+
+const store = createStore(rootReducer,initialState, composeWithDevTools(applyMiddleware(...middleware)))
+
+export defult store;
+
+index.js
+-----------------
+improt {provider} from 'react-redux'
+improt Store from './store'
+
+ReactDOM.render(
+	<Provider store={Store}>
+		<App />
+	</Provider>
+)
+
+userConstats.js
+-----------------
+export const GET_USERS_REQ ="GET_USERS_REQ"
+...
+...
+
+
+userRedecers.js
+-----------------
+export const userReducer =(state={users:[]},action)=>{
+	switch(action.type){
+		case GET_USERS_REQ:
+			return {loading:true,users:[]}
+		case GET_USERS_Success:
+			return {loading:false,users:action.payload}
+		case GET_USERS_FAIL:
+			return {loading:false,users:action.payload}	
+		defualt:
+			return state; 
+	}
+}
+
+
+userAction.js
+-----------------
+export const userAction = async (dispatch) => {
+	try{
+		dispatch({type:GET_USERS_REQ})
+		const {data} = await axios.get('https://get')
+		dispatch({type:GET_USERS_Success, payload:data})
+	} catch (error){
+		dispatch({
+			type:GET_USERS_FAIL,
+			payload: error.data
+		})
+	}
+}
+
+app.js
+----------
+import React, {useState,useEffect} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+
+function App(){
+	const dispatch =useDispatch()
+	const userList =useSelector(state=>state.userList)
+	useEffect(()=>
+		dispatch(userAction())
+	,[dispatch])
+}
+
+redux saga vs redux thunk vs redux toolkit vs context api
+in details.
+
 #Jest Interview questions and answers in react testing. 
 What is jest.
 
